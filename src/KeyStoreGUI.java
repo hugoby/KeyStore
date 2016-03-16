@@ -5,4 +5,8 @@
  */
 public class KeyStoreGUI {
 
+    public void test(){
+        System.out.println("test");
+    }
+
 }
