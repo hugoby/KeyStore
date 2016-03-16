@@ -5,8 +5,9 @@
  */
 public class KeyStoreGUI {
 
-    public void test(){
-        System.out.println("test");
+    public void testGit(){
+        System.out.println("GitTest");
     }
+
 
 }
