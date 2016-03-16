@@ -13,4 +13,5 @@ public class KeyStoreGUI {
 
     public void lastTest(){System.out.print("Hugo and wwh had accompanied the test of synchronizing github and IDEA.Oh yeah!");}
 
+    public void success(){System.out.print("eat something!Go!");}
 }
