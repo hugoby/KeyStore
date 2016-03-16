@@ -11,4 +11,6 @@ public class KeyStoreGUI {
 
     public void  testUpdate(){System.out.println("Test update");}
 
+    public void lastTest(){System.out.print("Hugo and wwh had accompanied the test of synchronizing github and IDEA.Oh yeah!");}
+
 }
