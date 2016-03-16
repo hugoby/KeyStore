@@ -9,5 +9,6 @@ public class KeyStoreGUI {
         System.out.println("GitTest");
     }
 
+    public void  testUpdate(){System.out.println("Test update");}
 
 }
