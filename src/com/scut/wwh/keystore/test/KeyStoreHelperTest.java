@@ -1,4 +1,4 @@
-package keystore;
+package com.scut.wwh.keystore.test;
 
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
@@ -18,7 +18,7 @@ import java.util.HashMap;
  * Created by Administrator on 2016/3/25.
  * @author by wwh
  */
-public class KeyStoreHelper {
+public class KeyStoreHelperTest {
 
         /*
          *Generate KeyPair  by using ECC Algrithom

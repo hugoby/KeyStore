@@ -1,5 +1,4 @@
-package keystore;
-
+package com.scut.wwh.keystore.test;
 
 import org.apache.commons.configuration.PropertiesConfiguration;
 
@@ -7,8 +6,8 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import java.security.KeyPair;
 import java.util.HashMap;
 
@@ -17,32 +16,23 @@ import java.util.HashMap;
  * Created by Administrator on 2016/3/28.
  * interface with user
  */
-public class KeyStoreGUI extends JFrame implements ActionListener{
+public class KeyStoreGUITest extends JFrame implements ActionListener{
    // private JLabel label1,label2;
-    private JButton button1,button2;
+    private JButton addButton,queryButton,updateButton,deleteButton;
+    private JButton loginButton,registerButton;
     public JTextField username;
+    public JPasswordField password;
     public JLabel nameLabel;
+    public JLabel pwdLabel;
     public JLabel KeyInfoLabel;
     private JTextArea keyArea;
     private JPanel panel;
     private JScrollPane scrollPane;
 
-//    public  void flush(){
-//        panel.removeAll();
-//        this.add(panel);
-//        panel.add(button1);
-//        panel.add(button2);
-//        panel.add(username);
-//        panel.add(nameLabel);
-//        panel.add(KeyInfoLabel);
-//        panel.add(keyArea);
-//        panel.add(scrollPane);
-//        panel.updateUI();
-//    }
-    public  KeyStoreGUI (){
-        this.setTitle("KeyStoreGUI");
-        this.setBounds(100,140,340,400);
-        setResizable(false);
+    public KeyStoreGUITest(){
+        this.setTitle("KeyStoreGUITest");
+        this.setBounds(100,140,340,500);
+        setResizable(true);
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -65,35 +55,69 @@ public class KeyStoreGUI extends JFrame implements ActionListener{
         panel.add(username);
 
 
-        button1 = new JButton("生成密钥");
-        button1.setBounds(50,150,100,22);
-        panel.add(button1);
-        button1.addActionListener(this);
+        //password
+         pwdLabel=new JLabel("password:");
+         pwdLabel.setBounds(50,75,70,25);
+         panel.add(pwdLabel);
 
-        button2= new JButton("查询密钥");
-        button2.setBounds(150,150,100,22);
-        panel.add(button2);
-        button2.addActionListener(this);
+        password=new JPasswordField();
+        password.setBounds(130,75,120,22);
+        panel.add(password);
+
+        //Button
+        addButton = new JButton("生成密钥");
+        addButton.setBounds(50,180,100,22);
+        panel.add(addButton);
+        addButton.addActionListener(this);
+
+        queryButton= new JButton("查询密钥");
+        queryButton.setBounds(150,180,100,22);
+        panel.add(queryButton);
+        queryButton.addActionListener(this);
+
+        //login
+        loginButton=new JButton("login");
+        loginButton.setBounds(70,110,83,22);
+        loginButton.setBorder(BorderFactory.createEtchedBorder());
+        panel.add(loginButton);
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //To Do login
+            }
+        });
+
+        //RegisterGUI
+        registerButton=new JButton("RegisterGUI");
+        registerButton.setBounds(195,110,83,22);
+        panel.add(registerButton);
+        registerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //To Do RegisterGUI
+            }
+        });
 
         KeyInfoLabel=new JLabel("密钥信息");
-        KeyInfoLabel.setBounds(2,170,70,25);
+        KeyInfoLabel.setBounds(2,270,70,25);
         panel.add(KeyInfoLabel);
 
         keyArea=new JTextArea();
         keyArea.setEditable(false);
         scrollPane=new JScrollPane(keyArea,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setBounds(2,200,350,150);
+        scrollPane.setBounds(2,300,350,150);
         panel.add(scrollPane);
         panel.updateUI();
 
     }
     public void actionPerformed(ActionEvent e){
-        String text_username=null;
-        PropertiesConfiguration keyProperties=null;
-        KeyPair keyPair=null;
-        HashMap<String,String> keyMap=new HashMap<String, String>();
+        String text_username;
+        PropertiesConfiguration keyProperties;
+        KeyPair keyPair;
+        HashMap<String,String> keyMap;
+
         //generate KeyPair
-        if (e.getSource()==button1){
+        if (e.getSource()==addButton){
             text_username=username.getText();
             //System.out.println("username--"+text_username);
             if(text_username.isEmpty()){
@@ -102,9 +126,9 @@ public class KeyStoreGUI extends JFrame implements ActionListener{
                 JOptionPane.showMessageDialog(this,"用户名为空，请输入用户名!");
             }else{
                 //此时根据用户输入的名字进行密钥文件的生成，还需要判断该用户是否已经存在密钥文件，生成密钥文件，提示生成功，并提示用户进行保存
-                KeyStoreHelper keyStoreHelper=new KeyStoreHelper();
-                keyPair=keyStoreHelper.generateKey();
-                keyMap=keyStoreHelper.tranToString(keyPair);
+                KeyStoreHelperTest keyStoreHelperTest =new KeyStoreHelperTest();
+                keyPair= keyStoreHelperTest.generateKey();
+                keyMap= keyStoreHelperTest.tranToString(keyPair);
                 if(keyMap.isEmpty()){
                     JOptionPane.showMessageDialog(this,"密钥生成失败，请重新生成");
                 }else{
@@ -113,7 +137,7 @@ public class KeyStoreGUI extends JFrame implements ActionListener{
                             "私钥信息：" + keyMap.get("privateKey"));
                    int flag=JOptionPane.showConfirmDialog(null, "是否需要保存密钥到文件", "密钥保存", JOptionPane.YES_NO_OPTION);
                     if(flag==0){
-                       boolean symbol= keyStoreHelper.saveKey(keyMap.get("publicKey"),keyMap.get("privateKey"),text_username);
+                       boolean symbol= keyStoreHelperTest.saveKey(keyMap.get("publicKey"),keyMap.get("privateKey"),text_username);
                         if(symbol){
                            JOptionPane.showMessageDialog(this,"密钥保存成功！");
                         }else{
@@ -125,7 +149,7 @@ public class KeyStoreGUI extends JFrame implements ActionListener{
             System.out.println("button1");
         }
         // Inquiry 密钥
-        if (e.getSource()==button2){
+        if (e.getSource()==queryButton){
             text_username=username.getText();
             //System.out.println("username--"+text_username);
             if(text_username.isEmpty()){
@@ -136,8 +160,8 @@ public class KeyStoreGUI extends JFrame implements ActionListener{
                 try{
                     //1.从默认文件路径下进行文件的查找如果存在，则将文件信息读取出来显示到TextArea
                     //2.如果密钥不存在则提示用户进行输入用户名，重新生成密钥对
-                    KeyStoreHelper keyStoreHelper=new KeyStoreHelper();
-                    keyProperties=keyStoreHelper.searchKeyFileByName(text_username);
+                    KeyStoreHelperTest keyStoreHelperTest =new KeyStoreHelperTest();
+                    keyProperties= keyStoreHelperTest.searchKeyFileByName(text_username);
                     if(keyProperties==null){
                         JOptionPane.showMessageDialog(this,"不存在与此用户名相匹配的密钥文件!");
                     }else {
@@ -154,8 +178,9 @@ public class KeyStoreGUI extends JFrame implements ActionListener{
 
     }
 
-
       public static void main(String args[]){
-           new KeyStoreGUI();
+           new KeyStoreGUITest();
+
       }
+
 }
